@@ -14,6 +14,7 @@
             estimated_effort,
             actual_effort,
             assignee,
+            severity,
             status,
             attached_id,
             remarks
@@ -26,6 +27,7 @@
             #{estimatedEffort},
             #{actualEffort},
             #{assignee},
+            #{severity},
             #{status},
             #{attachedId},
             #{remarks}
@@ -57,6 +59,9 @@
         </if>
         <if test="assignee != null and assignee != ''">
             and assignee = #{assignee}
+        </if>
+        <if test="severity != null and severity != ''">
+            and severity = #{severity}
         </if>
         <if test="status != null and status != ''">
             and status = #{status}
@@ -95,6 +100,9 @@
         </if>
         <if test="assignee != null and assignee != ''">
             , assignee = #{assignee}
+        </if>
+        <if test="severity != null and severity != ''">
+            , severity = #{severity}
         </if>
         <if test="status != null and status != ''">
             , status = #{status}

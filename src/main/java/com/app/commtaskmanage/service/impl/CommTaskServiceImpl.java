@@ -3,7 +3,7 @@ package com.app.commtaskmanage.service.impl;
 import com.app.commtaskmanage.enums.TaskStatusEnum;
 import com.app.commtaskmanage.repository.CommTaskRepository;
 import com.app.commtaskmanage.service.CommTaskService;
-import com.common.commnumbermanager.service.CommNumberService;
+import com.common.commreferencemanager.service.CommReferenceService;
 import com.core.data.model.DataModel;
 import com.core.exception.ExceptionHelper;
 import com.core.utils.StringUtils;
@@ -23,7 +23,7 @@ public class CommTaskServiceImpl implements CommTaskService {
     @Autowired
     private CommTaskRepository commTaskRepository;
     @Autowired
-    private CommNumberService commNumberService;
+    private CommReferenceService commReferenceService;
 
     /***
      * save comm task
@@ -31,9 +31,11 @@ public class CommTaskServiceImpl implements CommTaskService {
      */
     @Override
     public void saveCommTask(DataModel saveModel) {
-        saveModel.setFieldValue("numberType", "task_no");
+        DataModel generateModel = new DataModel();
+        generateModel.setFieldValue("type", "serial_number");
+        generateModel.setFieldValue("code", "taskNo");
         //get task_no Serial number
-        int taskSerialNumber = 100000 + commNumberService.generateNumber(saveModel);
+        int taskSerialNumber = 100000 + commReferenceService.generateNumber(generateModel);
         saveModel.setFieldValue("taskNo", "ITSR" + taskSerialNumber);
         saveModel.setFieldValue("status", TaskStatusEnum.NotStart);
         this.validateSaveOrUpdateCommTask(saveModel);
