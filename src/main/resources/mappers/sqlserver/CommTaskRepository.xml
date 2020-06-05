@@ -13,6 +13,7 @@
             system_name,
             estimated_effort,
             actual_effort,
+            created_by,
             assignee,
             severity,
             status,
@@ -26,6 +27,7 @@
             #{systemName},
             #{estimatedEffort},
             #{actualEffort},
+            #{createdBy},
             #{assignee},
             #{severity},
             #{status},
@@ -56,6 +58,9 @@
         </if>
         <if test="actualEffort != null">
             and actual_effort = #{actualEffort}
+        </if>
+        <if test="createdBy != null and createdBy != ''">
+            and created_by = #{createdBy}
         </if>
         <if test="assignee != null and assignee != ''">
             and assignee = #{assignee}
