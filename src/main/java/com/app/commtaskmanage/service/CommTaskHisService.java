@@ -12,6 +12,5 @@ public interface CommTaskHisService {
 
     void saveCommTaskHis(DataModel saveModel);
 
-
     List<DataModel> queryCommTaskHis(DataModel queryModel);
 }
