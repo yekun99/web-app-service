@@ -2,6 +2,7 @@ package com.app.commtaskmanage.service.impl;
 
 import com.app.commtaskmanage.enums.TaskStatusEnum;
 import com.app.commtaskmanage.repository.CommTaskRepository;
+import com.app.commtaskmanage.service.CommTaskHisService;
 import com.app.commtaskmanage.service.CommTaskService;
 import com.common.commreferencemanager.service.CommReferenceService;
 import com.core.data.model.DataModel;
@@ -23,10 +24,13 @@ public class CommTaskServiceImpl implements CommTaskService {
     @Autowired
     private CommTaskRepository commTaskRepository;
     @Autowired
+    private CommTaskHisService commTaskHisService;
+    @Autowired
     private CommReferenceService commReferenceService;
 
+
     /***
-     * save comm task
+     * save comm_task
      * @param saveModel
      */
     @Override
@@ -38,13 +42,17 @@ public class CommTaskServiceImpl implements CommTaskService {
         int taskSerialNumber = 100000 + commReferenceService.generateNumber(generateModel);
         saveModel.setFieldValue("taskNo", "ITSR" + taskSerialNumber);
         saveModel.setFieldValue("status", TaskStatusEnum.NotStart);
+        //validate model
         this.validateSaveOrUpdateCommTask(saveModel);
+        //save comm_task
         commTaskRepository.saveCommTask(saveModel);
+        //save comm_task_his
+        commTaskHisService.saveCommTaskHis(saveModel);
     }
 
 
     /***
-     * query comm task
+     * query comm_task
      * @param queryModel
      * @return
      */
@@ -55,7 +63,7 @@ public class CommTaskServiceImpl implements CommTaskService {
 
 
     /***
-     * delete comm task
+     * delete comm_task
      * @param deleteModel
      */
     @Override
@@ -66,7 +74,7 @@ public class CommTaskServiceImpl implements CommTaskService {
 
 
     /***
-     * update comm task
+     * update comm_task
      * @param updateModel
      */
     @Override
@@ -74,12 +82,16 @@ public class CommTaskServiceImpl implements CommTaskService {
         this.validateSaveOrUpdateCommTask(updateModel);
         //设置更新时间为系统当前时间
         updateModel.setFieldValue("timestamp", LocalDateTime.now());
+        //update comm_task
         commTaskRepository.updateCommTask(updateModel);
+        //save comm_task_his
+        updateModel.setFieldValue("createdBy", updateModel.getFieldValue("userName"));
+        commTaskHisService.saveCommTaskHis(updateModel);
     }
 
 
     /***
-     * validate comm task info
+     * validate comm_task
      * @param taskModel
      */
     protected void validateSaveOrUpdateCommTask(DataModel taskModel) {
