@@ -7,11 +7,13 @@ import com.app.commtaskmanage.service.CommTaskService;
 import com.common.commreferencemanager.service.CommReferenceService;
 import com.core.data.model.DataModel;
 import com.core.exception.ExceptionHelper;
+import com.core.utils.DateUtils;
 import com.core.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -58,7 +60,9 @@ public class CommTaskServiceImpl implements CommTaskService {
      */
     @Override
     public List<DataModel> queryCommTask(DataModel queryModel) {
-        return commTaskRepository.queryCommTask(queryModel);
+        List<DataModel> result = commTaskRepository.queryCommTask(queryModel);
+        result.stream().forEach(task -> task.setFieldValue("submissionDate", DateUtils.dateFormat((Date) task.getFieldValue("submissionDate"), "yyyy-MM-dd")));
+        return result;
     }
 
 

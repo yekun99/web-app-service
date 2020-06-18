@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.app.commtaskmanage.repository.CommTaskRepository">
+
+    <insert id="saveCommTask" parameterType="Map">
+        insert into comm_task
+        (
+            task_no,
+            task_type,
+            task_subject,
+            task_content,
+            system_name,
+            estimated_effort,
+            actual_effort,
+            created_by,
+            assignee,
+            severity,
+            status,
+            attached_id,
+            remarks
+        )values (
+            #{taskNo},
+            #{taskType},
+            #{taskSubject},
+            #{taskContent},
+            #{systemName},
+            #{estimatedEffort},
+            #{actualEffort},
+            #{createdBy},
+            #{assignee},
+            #{severity},
+            #{status},
+            #{attachedId},
+            #{remarks}
+        )
+    </insert>
+
+    <select id="queryCommTask" parameterType="Map" resultType="DataModel">
+        select * from comm_task where 1=1
+        <if test="taskNo != null and taskNo != ''">
+            and task_no = #{taskNo}
+        </if>
+        <if test="taskType != null and taskType != ''">
+            and task_type = #{taskType}
+        </if>
+        <if test="taskSubject != null and taskSubject != ''">
+            and task_subject = #{taskSubject}
+        </if>
+        <if test="taskContent != null and taskContent != ''">
+            and task_content = #{taskContent}
+        </if>
+        <if test="systemName != null and systemName != ''">
+            and system_name = #{systemName}
+        </if>
+        <if test="estimatedEffort != null">
+            and estimated_effort = #{estimatedEffort}
+        </if>
+        <if test="actualEffort != null">
+            and actual_effort = #{actualEffort}
+        </if>
+        <if test="createdBy != null and createdBy != ''">
+            and created_by = #{createdBy}
+        </if>
+        <if test="assignee != null and assignee != ''">
+            and assignee = #{assignee}
+        </if>
+        <if test="severity != null and severity != ''">
+            and severity = #{severity}
+        </if>
+        <if test="status != null and status != ''">
+            and status = #{status}
+        </if>
+        <if test="attachedId != null and attachedId != ''">
+            and attached_id = #{attachedId}
+        </if>
+        <if test="remarks != null and remarks != ''">
+            and remarks = #{remarks}
+        </if>
+        <if test="submissionDate != null">
+            and submission_date = #{submissionDate}
+        </if>
+    </select>
+
+    <update id="updateCommTask" parameterType="Map">
+        update comm_task
+        set timestamp = #{timestamp}
+        <if test="taskType != null and taskType != ''">
+            , task_type = #{taskType}
+        </if>
+        <if test="taskSubject != null and taskSubject != ''">
+            , task_subject = #{taskSubject}
+        </if>
+        <if test="taskContent != null and taskContent != ''">
+            , task_content = #{taskContent}
+        </if>
+        <if test="systemName != null and systemName != ''">
+            , system_name = #{systemName}
+        </if>
+        <if test="estimatedEffort != null">
+            , estimated_effort = #{estimatedEffort}
+        </if>
+        <if test="actualEffort != null">
+            , actual_effort = #{actualEffort}
+        </if>
+        <if test="assignee != null and assignee != ''">
+            , assignee = #{assignee}
+        </if>
+        <if test="severity != null and severity != ''">
+            , severity = #{severity}
+        </if>
+        <if test="status != null and status != ''">
+            , status = #{status}
+        </if>
+        <if test="attachedId != null and attachedId != ''">
+            , attached_id = #{attachedId}
+        </if>
+        <if test="remarks != null and remarks != ''">
+            , remarks = #{remarks}
+        </if>
+        where task_no = #{taskNo}
+    </update>
+
+    <delete id="deleteCommTask" parameterType="Map">
+        delete from comm_task where task_no = #{taskNo}
+    </delete>
+</mapper>
