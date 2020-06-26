@@ -41,7 +41,10 @@ public class CommTaskHisServiceImpl implements CommTaskHisService {
     @Override
     public List<DataModel> queryCommTaskHis(DataModel queryModel) {
         List<DataModel> result = commTaskHisRepository.queryCommTaskHis(queryModel);
-        result.stream().forEach(taskHis -> taskHis.setFieldValue("submissionDate", DateUtils.dateFormat((Date) taskHis.getFieldValue("submissionDate"), "yyyy-MM-dd")));
+        result.stream().forEach(taskHis -> {
+            taskHis.setFieldValue("submissionDate", DateUtils.dateFormat((Date) taskHis.getFieldValue("submissionDate"), "yyyy-MM-dd"));
+            taskHis.setFieldValue("timestamp", DateUtils.dateFormat((Date) taskHis.getFieldValue("timestamp"), "yyyy-MM-dd HH:mm:ss"));
+        });
         return result;
     }
 }
