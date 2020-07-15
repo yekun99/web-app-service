@@ -7,11 +7,10 @@ import com.core.exception.ValidationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -21,7 +20,7 @@ import java.util.Map;
  * @author dechun.yuan
  * @version 1.0
  */
-@Controller
+@RestController
 @RequestMapping("/api/task")
 public class CommTaskController extends BaseController {
 
@@ -38,7 +37,6 @@ public class CommTaskController extends BaseController {
      * @return
      */
     @RequestMapping(method = RequestMethod.POST, value = "/save")
-    @ResponseBody
     public Map<String, Object> saveCommTask(HttpServletRequest request, @RequestBody Map<String, Object> requestMap) {
         DataModel resultModel = new DataModel();
         try {
@@ -61,7 +59,6 @@ public class CommTaskController extends BaseController {
      * @return
      */
     @RequestMapping(method = RequestMethod.POST, value = "/query")
-    @ResponseBody
     public Map<String, Object> queryCommTask(HttpServletRequest request, @RequestBody Map<String, Object> requestMap) {
         DataModel resultModel = new DataModel();
         try {
@@ -83,7 +80,6 @@ public class CommTaskController extends BaseController {
      * @return
      */
     @RequestMapping(method = RequestMethod.DELETE, value = "/delete")
-    @ResponseBody
     public Map<String, Object> deleteCommTask(HttpServletRequest request) {
         DataModel resultModel = new DataModel();
         try {
@@ -106,7 +102,6 @@ public class CommTaskController extends BaseController {
      * @return
      */
     @RequestMapping(method = RequestMethod.PATCH, value = "/update")
-    @ResponseBody
     public Map<String, Object> updateCommTask(HttpServletRequest request, @RequestBody Map<String, Object> requestMap) {
         DataModel resultModel = new DataModel();
         try {
