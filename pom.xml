@@ -25,7 +25,6 @@
             <groupId>com</groupId>
             <artifactId>app-core</artifactId>
             <version>0.0.1</version>
-            <!--<scope>compile</scope>-->
         </dependency>
 
         <dependency>
