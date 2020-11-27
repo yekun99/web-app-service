@@ -7,6 +7,7 @@ import com.core.exception.ValidationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -32,12 +33,11 @@ public class CommTaskController extends BaseController {
 
     /***
      * save comm task
-     * @param request
      * @param requestMap
      * @return
      */
     @RequestMapping(method = RequestMethod.POST, value = "/save")
-    public Map<String, Object> saveCommTask(HttpServletRequest request, @RequestBody Map<String, Object> requestMap) {
+    public Map<String, Object> saveCommTask(@RequestBody Map<String, Object> requestMap) {
         DataModel resultModel = new DataModel();
         try {
             DataModel saveModel = this.getInputData(requestMap);
@@ -53,16 +53,35 @@ public class CommTaskController extends BaseController {
 
 
     /***
-     * query comm task
-     * @param request
+     * query all comm_task
      * @param requestMap
      * @return
      */
-    @RequestMapping(method = RequestMethod.POST, value = "/query")
-    public Map<String, Object> queryCommTask(HttpServletRequest request, @RequestBody Map<String, Object> requestMap) {
+    @RequestMapping(method = RequestMethod.POST, value = "/query/all")
+    public Map<String, Object> queryCommTask(@RequestBody Map<String, Object> requestMap) {
         DataModel resultModel = new DataModel();
         try {
             DataModel queryModel = this.getInputData(requestMap);
+            List<DataModel> userModel = commTaskService.queryCommTask(queryModel);
+            this.handleSuccess(userModel, resultModel);
+        } catch (ValidationException ve) {
+            this.handleValidationExcpetion(ve, resultModel);
+        } catch (Exception e) {
+            this.handleException(e, resultModel);
+        }
+        return resultModel;
+    }
+
+
+    /***
+     * query comm_task by user_name
+     */
+    @RequestMapping(method = RequestMethod.POST, value = "/query/user-task")
+    public Map<String, Object> queryCommTaskByUserName(@RequestBody Map<String, Object> requestMap) {
+        DataModel resultModel = new DataModel();
+        try {
+            DataModel queryModel = this.getInputData(requestMap);
+            queryModel.setFieldValue("assignee", SecurityContextHolder.getContext().getAuthentication().getPrincipal());
             List<DataModel> userModel = commTaskService.queryCommTask(queryModel);
             this.handleSuccess(userModel, resultModel);
         } catch (ValidationException ve) {
@@ -97,12 +116,11 @@ public class CommTaskController extends BaseController {
 
     /***
      * update comm task
-     * @param request
      * @param requestMap
      * @return
      */
     @RequestMapping(method = RequestMethod.PATCH, value = "/update")
-    public Map<String, Object> updateCommTask(HttpServletRequest request, @RequestBody Map<String, Object> requestMap) {
+    public Map<String, Object> updateCommTask(@RequestBody Map<String, Object> requestMap) {
         DataModel resultModel = new DataModel();
         try {
             DataModel updateModel = this.getInputData(requestMap);

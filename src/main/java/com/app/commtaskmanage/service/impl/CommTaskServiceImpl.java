@@ -10,6 +10,7 @@ import com.core.exception.ExceptionHelper;
 import com.core.utils.DateUtils;
 import com.core.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -37,6 +38,8 @@ public class CommTaskServiceImpl implements CommTaskService {
      */
     @Override
     public void saveCommTask(DataModel saveModel) {
+        //设置当前用户
+        saveModel.setFieldValue("createdBy", SecurityContextHolder.getContext().getAuthentication().getPrincipal());
         DataModel generateModel = new DataModel();
         generateModel.setFieldValue("numberName", "taskNo");
         //get task_no Serial number
@@ -53,7 +56,7 @@ public class CommTaskServiceImpl implements CommTaskService {
 
 
     /***
-     * query comm_task
+     * query all comm_task
      * @param queryModel
      * @return
      */
@@ -83,6 +86,8 @@ public class CommTaskServiceImpl implements CommTaskService {
     @Override
     public void updateCommTask(DataModel updateModel) {
         this.validateSaveOrUpdateCommTask(updateModel);
+        //设置当前用户名
+        updateModel.setFieldValue("userName", SecurityContextHolder.getContext().getAuthentication().getPrincipal());
         //设置更新时间为系统当前时间
         updateModel.setFieldValue("timestamp", LocalDateTime.now());
         //update comm_task
