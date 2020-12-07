@@ -1,6 +1,6 @@
-package com.app.commtaskmanage.controller;
+package com.app.taskmanage.controller;
 
-import com.app.commtaskmanage.service.CommTaskHisService;
+import com.app.taskmanage.service.TaskHisService;
 import com.core.controller.BaseController;
 import com.core.data.model.DataModel;
 import com.core.exception.ValidationException;
@@ -22,12 +22,12 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/api/task/his")
-public class CommTaskHisController extends BaseController {
+public class TaskHisController extends BaseController {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
-    private CommTaskHisService commTaskHisService;
+    private TaskHisService taskHisService;
 
 
     /***
@@ -41,7 +41,7 @@ public class CommTaskHisController extends BaseController {
         DataModel resultModel = new DataModel();
         try {
             DataModel queryModel = this.getInputData(requestMap);
-            List<DataModel> userModel = commTaskHisService.queryCommTaskHis(queryModel);
+            List<DataModel> userModel = taskHisService.queryCommTaskHis(queryModel);
             this.handleSuccess(userModel, resultModel);
         } catch (ValidationException ve) {
             this.handleValidationExcpetion(ve, resultModel);

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration scan="true" scanPeriod="10 seconds">
     <appender name="SAVE-TO-FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>./logs/web-app-service.log</file>
+        <file>./logs/itech-service.log</file>
         <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
             <Pattern>%d{dd-MM-yyyy HH:mm:ss.SSS} [%thread] %-5level %logger{36}.%M - %msg%n</Pattern>
         </encoder>
         <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-            <fileNamePattern>./logs/web-app-service_%d{yyyy-MM-dd}_%i.log</fileNamePattern>
+            <fileNamePattern>./logs/itech-service_%d{yyyy-MM-dd}_%i.log</fileNamePattern>
             <maxFileSize>10MB</maxFileSize>
             <maxHistory>30</maxHistory>
             <totalSizeCap>100MB</totalSizeCap>
@@ -21,7 +21,7 @@
     </appender>
 
     <springProfile name="dev">
-        <root level="debug">
+        <root level="info">
             <appender-ref ref="STDOUT"/>
         </root>
         <logger name="org.springframework" level="warn" additivity="false">
@@ -35,7 +35,7 @@
     </springProfile>
 
     <springProfile name="!dev">
-        <root level="debug">
+        <root level="info">
             <appender-ref ref="STDOUT"/>
         </root>
         <logger name="org.springframework" level="warn" additivity="false">

@@ -1,4 +1,4 @@
-package com.app.commtaskmanage.enums;
+package com.app.taskmanage.enums;
 
 /**
  * @author dechun.yuan

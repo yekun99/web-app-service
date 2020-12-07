@@ -1,7 +1,7 @@
-package com.app.commtaskmanage.service.impl;
+package com.app.taskmanage.service.impl;
 
-import com.app.commtaskmanage.repository.CommTaskHisRepository;
-import com.app.commtaskmanage.service.CommTaskHisService;
+import com.app.taskmanage.repository.TaskHisRepository;
+import com.app.taskmanage.service.TaskHisService;
 import com.core.data.model.DataModel;
 import com.core.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,10 +15,10 @@ import java.util.List;
  * @version 1.0
  */
 @Service
-public class CommTaskHisServiceImpl implements CommTaskHisService {
+public class TaskHisServiceImpl implements TaskHisService {
 
     @Autowired
-    private CommTaskHisRepository commTaskHisRepository;
+    private TaskHisRepository taskHisRepository;
 
 
     /**
@@ -28,7 +28,7 @@ public class CommTaskHisServiceImpl implements CommTaskHisService {
      */
     @Override
     public void saveCommTaskHis(DataModel saveModel) {
-        commTaskHisRepository.saveCommTaskHis(saveModel);
+        taskHisRepository.saveCommTaskHis(saveModel);
     }
 
 
@@ -40,7 +40,7 @@ public class CommTaskHisServiceImpl implements CommTaskHisService {
      */
     @Override
     public List<DataModel> queryCommTaskHis(DataModel queryModel) {
-        List<DataModel> result = commTaskHisRepository.queryCommTaskHis(queryModel);
+        List<DataModel> result = taskHisRepository.queryCommTaskHis(queryModel);
         result.stream().forEach(taskHis -> {
             taskHis.setFieldValue("submissionDate", DateUtils.dateFormat((Date) taskHis.getFieldValue("submissionDate"), "yyyy-MM-dd"));
             taskHis.setFieldValue("timestamp", DateUtils.dateFormat((Date) taskHis.getFieldValue("timestamp"), "yyyy-MM-dd HH:mm:ss"));

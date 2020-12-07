@@ -1,9 +1,9 @@
-package com.app.commtaskmanage.service.impl;
+package com.app.taskmanage.service.impl;
 
-import com.app.commtaskmanage.enums.TaskStatusEnum;
-import com.app.commtaskmanage.repository.CommTaskRepository;
-import com.app.commtaskmanage.service.CommTaskHisService;
-import com.app.commtaskmanage.service.CommTaskService;
+import com.app.taskmanage.enums.TaskStatusEnum;
+import com.app.taskmanage.repository.TaskRepository;
+import com.app.taskmanage.service.TaskHisService;
+import com.app.taskmanage.service.TaskService;
 import com.common.commnumbergenerate.service.CommNumberGenerateService;
 import com.core.data.model.DataModel;
 import com.core.exception.ExceptionHelper;
@@ -22,12 +22,12 @@ import java.util.List;
  * @version 1.0
  */
 @Service
-public class CommTaskServiceImpl implements CommTaskService {
+public class TaskServiceImpl implements TaskService {
 
     @Autowired
-    private CommTaskRepository commTaskRepository;
+    private TaskRepository commTaskRepository;
     @Autowired
-    private CommTaskHisService commTaskHisService;
+    private TaskHisService taskHisService;
     @Autowired
     private CommNumberGenerateService commNumberGenerateService;
 
@@ -48,10 +48,10 @@ public class CommTaskServiceImpl implements CommTaskService {
         saveModel.setFieldValue("status", TaskStatusEnum.NotStart);
         //validate model
         this.validateSaveOrUpdateCommTask(saveModel);
-        //save comm_task
+        //save pms_task
         commTaskRepository.saveCommTask(saveModel);
-        //save comm_task_his
-        commTaskHisService.saveCommTaskHis(saveModel);
+        //save pms_task_his
+        taskHisService.saveCommTaskHis(saveModel);
     }
 
 
@@ -94,7 +94,7 @@ public class CommTaskServiceImpl implements CommTaskService {
         commTaskRepository.updateCommTask(updateModel);
         //save comm_task_his
         updateModel.setFieldValue("createdBy", updateModel.getFieldValue("userName"));
-        commTaskHisService.saveCommTaskHis(updateModel);
+        taskHisService.saveCommTaskHis(updateModel);
     }
 
 

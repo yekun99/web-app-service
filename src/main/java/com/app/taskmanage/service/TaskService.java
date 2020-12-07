@@ -1,4 +1,4 @@
-package com.app.commtaskmanage.service;
+package com.app.taskmanage.service;
 
 import com.core.data.model.DataModel;
 
@@ -8,7 +8,7 @@ import java.util.List;
  * @author dechun.yuan
  * @version 1.0
  */
-public interface CommTaskService {
+public interface TaskService {
 
     void saveCommTask(DataModel saveModel);
 

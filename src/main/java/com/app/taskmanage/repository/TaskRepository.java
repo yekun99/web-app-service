@@ -1,4 +1,4 @@
-package com.app.commtaskmanage.repository;
+package com.app.taskmanage.repository;
 
 import com.core.data.model.DataModel;
 import org.apache.ibatis.annotations.Mapper;
@@ -12,7 +12,7 @@ import java.util.List;
  */
 @Repository
 @Mapper
-public interface CommTaskRepository {
+public interface TaskRepository {
 
     void saveCommTask(DataModel saveModel);
 

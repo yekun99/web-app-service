@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com</groupId>
-    <artifactId>web-app-service</artifactId>
+    <artifactId>itech-service</artifactId>
     <version>0.0.1</version>
-    <name>web-app-service</name>
-    <description>web app service</description>
+    <name>itech-service</name>
+    <description>itech service</description>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

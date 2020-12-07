@@ -1,6 +1,6 @@
-package com.app.commtaskmanage.controller;
+package com.app.timesheetmanage.controller;
 
-import com.app.commtaskmanage.service.CommTaskService;
+import com.app.timesheetmanage.service.TimeSheetService;
 import com.core.controller.BaseController;
 import com.core.data.model.DataModel;
 import com.core.exception.ValidationException;
@@ -22,26 +22,27 @@ import java.util.Map;
  * @version 1.0
  */
 @RestController
-@RequestMapping("/api/task")
-public class CommTaskController extends BaseController {
+@RequestMapping("/api/timeSheet")
+public class TimeSheetController extends BaseController {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
-    private CommTaskService commTaskService;
+    private TimeSheetService timeSheetService;
 
 
     /***
-     * save comm task
+     * save time sheet
      * @param requestMap
      * @return
      */
     @RequestMapping(method = RequestMethod.POST, value = "/save")
-    public Map<String, Object> saveCommTask(@RequestBody Map<String, Object> requestMap) {
+    public Map<String, Object> saveTimeSheet(@RequestBody Map<String, Object> requestMap) {
         DataModel resultModel = new DataModel();
         try {
             DataModel saveModel = this.getInputData(requestMap);
-            commTaskService.saveCommTask(saveModel);
+            saveModel.setFieldValue("userName", SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+            timeSheetService.saveTimeSheet(saveModel);
             this.handleSuccess(resultModel);
         } catch (ValidationException ve) {
             this.handleValidationExcpetion(ve, resultModel);
@@ -53,16 +54,17 @@ public class CommTaskController extends BaseController {
 
 
     /***
-     * query all comm_task
+     * query time sheet list
      * @param requestMap
      * @return
      */
-    @RequestMapping(method = RequestMethod.POST, value = "/query/all")
-    public Map<String, Object> queryCommTask(@RequestBody Map<String, Object> requestMap) {
+    @RequestMapping(method = RequestMethod.POST, value = "/query-list")
+    public Map<String, Object> queryTimeSheetList(@RequestBody Map<String, Object> requestMap) {
         DataModel resultModel = new DataModel();
         try {
             DataModel queryModel = this.getInputData(requestMap);
-            List<DataModel> userModel = commTaskService.queryCommTask(queryModel);
+            queryModel.setFieldValue("userName", SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+            List<DataModel> userModel = timeSheetService.queryTimeSheetList(queryModel);
             this.handleSuccess(userModel, resultModel);
         } catch (ValidationException ve) {
             this.handleValidationExcpetion(ve, resultModel);
@@ -74,15 +76,14 @@ public class CommTaskController extends BaseController {
 
 
     /***
-     * query comm_task by user_name
+     * query time sheet by id
      */
-    @RequestMapping(method = RequestMethod.POST, value = "/query/user-task")
-    public Map<String, Object> queryCommTaskByUserName(@RequestBody Map<String, Object> requestMap) {
+    @RequestMapping(method = RequestMethod.POST, value = "/query-id")
+    public Map<String, Object> queryTimeSheetById(@RequestBody Map<String, Object> requestMap) {
         DataModel resultModel = new DataModel();
         try {
             DataModel queryModel = this.getInputData(requestMap);
-            queryModel.setFieldValue("assignee", SecurityContextHolder.getContext().getAuthentication().getPrincipal());
-            List<DataModel> userModel = commTaskService.queryCommTask(queryModel);
+            DataModel userModel = timeSheetService.queryTimeSheetById(queryModel);
             this.handleSuccess(userModel, resultModel);
         } catch (ValidationException ve) {
             this.handleValidationExcpetion(ve, resultModel);
@@ -94,16 +95,16 @@ public class CommTaskController extends BaseController {
 
 
     /***
-     * delete comm task
+     * delete time sheet
      * @param request
      * @return
      */
     @RequestMapping(method = RequestMethod.DELETE, value = "/delete")
-    public Map<String, Object> deleteCommTask(HttpServletRequest request) {
+    public Map<String, Object> deleteTimeSheet(HttpServletRequest request) {
         DataModel resultModel = new DataModel();
         try {
             DataModel deleteModel = this.getInputData(request);
-            commTaskService.deleteCommTask(deleteModel);
+            timeSheetService.deleteTimeSheet(deleteModel);
             this.handleSuccess(null, resultModel);
         } catch (ValidationException ve) {
             this.handleValidationExcpetion(ve, resultModel);
@@ -115,16 +116,16 @@ public class CommTaskController extends BaseController {
 
 
     /***
-     * update comm task
+     * update time sheet
      * @param requestMap
      * @return
      */
     @RequestMapping(method = RequestMethod.PATCH, value = "/update")
-    public Map<String, Object> updateCommTask(@RequestBody Map<String, Object> requestMap) {
+    public Map<String, Object> updateTimeSheet(@RequestBody Map<String, Object> requestMap) {
         DataModel resultModel = new DataModel();
         try {
             DataModel updateModel = this.getInputData(requestMap);
-            commTaskService.updateCommTask(updateModel);
+            timeSheetService.updateTimeSheet(updateModel);
             this.handleSuccess(null, resultModel);
         } catch (ValidationException ve) {
             this.handleValidationExcpetion(ve, resultModel);
