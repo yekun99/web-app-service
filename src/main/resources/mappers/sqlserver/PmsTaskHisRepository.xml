@@ -80,6 +80,5 @@
         <if test="submissionDate != null">
             and submission_date = #{submissionDate}
         </if>
-        order by timestamp desc
     </select>
 </mapper>

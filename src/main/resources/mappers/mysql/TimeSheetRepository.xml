@@ -8,7 +8,7 @@
         (
             user_name,
             work_day,
-            effort,
+            actual_effort,
             system_name,
             task_no,
             task_type,
@@ -16,11 +16,11 @@
             task_content,
             remarks,
             created_date,
-            timesheet
+            timestamp
         )values (
             #{userName},
             #{workDay},
-            #{effort},
+            #{actualEffort},
             #{systemName},
             #{taskNo},
             #{taskType},
@@ -28,7 +28,7 @@
             #{taskContent},
             #{remarks},
             #{createdDate},
-            #{timesheet}
+            #{timestamp}
         )
     </insert>
 
@@ -40,8 +40,8 @@
         <if test="workDay != null">
             and work_day = #{workDay}
         </if>
-        <if test="effort != null">
-            and effort = #{effort}
+        <if test="actualEffort != null">
+            and actual_effort = #{actualEffort}
         </if>
         <if test="systemName != null and systemName != ''">
             and system_name = #{systemName}
@@ -70,20 +70,14 @@
     <update id="updateTimeSheet" parameterType="Map">
         update pms_timesheet
         set timestamp = #{timestamp}
-        <if test="userName != null and userName != ''">
-            , user_name = #{userName}
-        </if>
-        <if test="workDay != null">
-            , work_day = #{workDay}
-        </if>
-        <if test="effort != null">
-            , effort = #{effort}
+        <if test="actualEffort != null">
+            , actual_effort = #{actualEffort}
         </if>
         <if test="systemName != null and systemName != ''">
             , system_name = #{systemName}
         </if>
         <if test="taskNo != null and taskNo != ''">
-            and task_no = #{taskNo}
+            , task_no = #{taskNo}
         </if>
         <if test="taskType != null and taskType != ''">
             , task_type = #{taskType}
@@ -96,9 +90,6 @@
         </if>
         <if test="remarks != null and remarks != ''">
             , remarks = #{remarks}
-        </if>
-        <if test="createdDate != null">
-            , created_date = #{createdDate}
         </if>
         where id = #{id}
     </update>

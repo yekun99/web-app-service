@@ -1,5 +1,6 @@
 package com.app.timesheetmanage.service.impl;
 
+import com.app.taskmanage.service.TaskService;
 import com.app.timesheetmanage.repository.TimeSheetRepository;
 import com.app.timesheetmanage.service.TimeSheetService;
 import com.core.data.model.DataModel;
@@ -8,6 +9,7 @@ import com.core.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -19,12 +21,19 @@ public class TimeSheetServiceImpl implements TimeSheetService {
 
     @Autowired
     private TimeSheetRepository timeSheetRepository;
+    @Autowired
+    private TaskService taskService;
 
 
     @Override
     public void saveTimeSheet(DataModel saveModel) {
         //validate model
         this.validateSaveOrUpdateTimeSheet(saveModel);
+        //set update timestamp
+        saveModel.setFieldValue("timestamp", LocalDateTime.now());
+        saveModel.setFieldValue("createdDate", LocalDateTime.now());
+        //set task info
+        this.setTaskInfo(saveModel);
         //save data
         timeSheetRepository.saveTimeSheet(saveModel);
     }
@@ -53,8 +62,30 @@ public class TimeSheetServiceImpl implements TimeSheetService {
     public void updateTimeSheet(DataModel updateModel) {
         //validate update model
         this.validateSaveOrUpdateTimeSheet(updateModel);
+        //set update timestamp
+        updateModel.setFieldValue("timestamp", LocalDateTime.now());
+        //set task info
+        this.setTaskInfo(updateModel);
         //update data
         timeSheetRepository.updateTimeSheet(updateModel);
+    }
+
+
+    /**
+     * set info
+     */
+    public void setTaskInfo(DataModel setModel) {
+        //set task info
+        DataModel queryTask = new DataModel();
+        queryTask.setFieldValue("taskNo", setModel.getStringValue("taskNo"));
+        List<DataModel> taskList = taskService.queryCommTask(queryTask);
+        if (taskList != null && taskList.size() > 0) {
+            DataModel taskModel = taskList.get(0);
+            setModel.setFieldValue("taskType", taskModel.getStringValue("taskType"));
+            setModel.setFieldValue("taskSubject", taskModel.getStringValue("taskSubject"));
+            setModel.setFieldValue("taskContent", taskModel.getStringValue("taskContent"));
+            setModel.setFieldValue("systemName", taskModel.getStringValue("systemName"));
+        }
     }
 
     /***
