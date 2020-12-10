@@ -77,8 +77,8 @@
         <if test="remarks != null and remarks != ''">
             and remarks = #{remarks}
         </if>
-        <if test="submissionDate != null">
-            and submission_date = #{submissionDate}
+        <if test="insertDate != null">
+            and insert_date = #{insertDate}
         </if>
     </select>
 </mapper>

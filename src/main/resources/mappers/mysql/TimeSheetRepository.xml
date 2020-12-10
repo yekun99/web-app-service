@@ -14,9 +14,7 @@
             task_type,
             task_subject,
             task_content,
-            remarks,
-            created_date,
-            timestamp
+            remarks
         )values (
             #{userName},
             #{workDay},
@@ -26,9 +24,7 @@
             #{taskType},
             #{taskSubject},
             #{taskContent},
-            #{remarks},
-            #{createdDate},
-            #{timestamp}
+            #{remarks}
         )
     </insert>
 
@@ -58,9 +54,10 @@
         <if test="taskContent != null and taskContent != ''">
             and task_content = #{taskContent}
         </if>
-        <if test="createdDate != null">
-            and created_date = #{createdDate}
+        <if test="insertDate != null">
+            and insert_date = #{insertDate}
         </if>
+        order by work_day desc
     </select>
 
     <select id="queryTimeSheetById" parameterType="Map" resultType="DataModel">

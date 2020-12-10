@@ -63,7 +63,7 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public List<DataModel> queryCommTask(DataModel queryModel) {
         List<DataModel> result = commTaskRepository.queryCommTask(queryModel);
-        result.stream().forEach(task -> task.setFieldValue("submissionDate", DateUtils.dateFormat((Date) task.getFieldValue("submissionDate"), "yyyy-MM-dd")));
+        result.stream().forEach(task -> task.setFieldValue("insertDate", DateUtils.dateFormat((Date) task.getFieldValue("insertDate"), "yyyy-MM-dd")));
         return result;
     }
 
