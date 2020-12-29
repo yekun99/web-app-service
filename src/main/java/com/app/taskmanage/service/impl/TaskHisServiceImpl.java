@@ -7,6 +7,7 @@ import com.core.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -21,20 +22,21 @@ public class TaskHisServiceImpl implements TaskHisService {
     private TaskHisRepository taskHisRepository;
 
 
-    /**
+    /***
      * save comm_task_his
-     *
      * @param saveModel
      */
     @Override
     public void saveCommTaskHis(DataModel saveModel) {
+        //set timestamp
+        saveModel.setFieldValue("insertDate", LocalDateTime.now());
+        saveModel.setFieldValue("timestamp", LocalDateTime.now());
         taskHisRepository.saveCommTaskHis(saveModel);
     }
 
 
-    /**
+    /***
      * query comm_task_his
-     *
      * @param queryModel
      * @return
      */

@@ -31,6 +31,9 @@ public class TimeSheetServiceImpl implements TimeSheetService {
         this.validateSaveOrUpdateTimeSheet(saveModel);
         //set task info
         this.setTaskInfo(saveModel);
+        //set insert timestamp
+        saveModel.setFieldValue("insertDate", LocalDateTime.now());
+        saveModel.setFieldValue("timestamp", LocalDateTime.now());
         //save data
         timeSheetRepository.saveTimeSheet(saveModel);
     }

@@ -48,6 +48,9 @@ public class TaskServiceImpl implements TaskService {
         saveModel.setFieldValue("status", TaskStatusEnum.NotStart);
         //validate model
         this.validateSaveOrUpdateCommTask(saveModel);
+        //set timestamp
+        saveModel.setFieldValue("insertDate", LocalDateTime.now());
+        saveModel.setFieldValue("timestamp", LocalDateTime.now());
         //save pms_task
         commTaskRepository.saveCommTask(saveModel);
         //save pms_task_his
