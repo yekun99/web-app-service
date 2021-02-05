@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 80012
 File Encoding         : 65001
 
-Date: 2020-12-29 15:38:01
+Date: 2021-02-05 15:11:40
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -21,8 +21,8 @@ SET FOREIGN_KEY_CHECKS=0;
 DROP TABLE IF EXISTS `comm_id_card`;
 CREATE TABLE `comm_id_card` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `id_type` varchar(20) DEFAULT NULL,
   `id_card` varchar(18) NOT NULL,
+  `id_type` varchar(20) DEFAULT NULL,
   `name` varchar(100) DEFAULT NULL,
   `gender` varchar(2) DEFAULT NULL,
   `birthday` date DEFAULT NULL,
@@ -80,16 +80,17 @@ CREATE TABLE `comm_number_generate` (
 DROP TABLE IF EXISTS `comm_reftab`;
 CREATE TABLE `comm_reftab` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `element_code` varchar(200) DEFAULT NULL,
-  `element_name` varchar(500) DEFAULT NULL,
+  `element_type` varchar(100) DEFAULT NULL,
+  `element_code` varchar(100) DEFAULT NULL,
+  `element_name` varchar(200) DEFAULT NULL,
   `language_id` varchar(20) DEFAULT NULL,
-  `category_code` varchar(200) DEFAULT NULL,
-  `category_desc` varchar(500) DEFAULT NULL,
+  `category_code` varchar(100) DEFAULT NULL,
+  `category_desc` varchar(200) DEFAULT NULL,
   `remarks` varchar(500) DEFAULT NULL,
   `insert_date` datetime DEFAULT NULL,
   `timestamp` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `indx_reference` (`element_code`,`element_name`) USING BTREE
+  UNIQUE KEY `indx_reference` (`element_type`,`element_code`,`element_name`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -152,7 +153,7 @@ CREATE TABLE `pms_timesheet` (
   `actual_effort` decimal(12,2) DEFAULT NULL,
   `task_no` varchar(50) DEFAULT NULL,
   `task_type` varchar(50) DEFAULT NULL,
-  `task_subject` varchar(200) DEFAULT NULL,
+  `task_subject` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
   `task_content` text,
   `system_name` varchar(100) DEFAULT NULL,
   `remarks` varchar(500) DEFAULT NULL,
@@ -200,7 +201,7 @@ CREATE TABLE `sys_user` (
   `timestamp` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `indx_user_name` (`user_name`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for wf_def
