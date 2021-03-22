@@ -4,10 +4,10 @@ import com.app.timesheetmanage.service.TimeSheetService;
 import com.core.controller.BaseController;
 import com.core.data.model.DataModel;
 import com.core.exception.ValidationException;
+import com.core.security.SecurityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -41,7 +41,7 @@ public class TimeSheetController extends BaseController {
         DataModel resultModel = new DataModel();
         try {
             DataModel saveModel = this.getInputData(requestMap);
-            saveModel.setFieldValue("userName", SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+            saveModel.setFieldValue("userName", SecurityUtils.getCurUsername());
             timeSheetService.saveTimeSheet(saveModel);
             this.handleSuccess(resultModel);
         } catch (ValidationException ve) {
@@ -63,7 +63,7 @@ public class TimeSheetController extends BaseController {
         DataModel resultModel = new DataModel();
         try {
             DataModel queryModel = this.getInputData(requestMap);
-            queryModel.setFieldValue("userName", SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+            queryModel.setFieldValue("userName", SecurityUtils.getCurUsername());
             List<DataModel> userModel = timeSheetService.queryTimeSheetList(queryModel);
             this.handleSuccess(userModel, resultModel);
         } catch (ValidationException ve) {

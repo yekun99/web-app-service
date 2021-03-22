@@ -14,7 +14,9 @@
             task_type,
             task_subject,
             task_content,
-            remarks
+            remarks,
+            insert_date,
+            timestamp
         )values (
             #{userName},
             #{workDay},
@@ -24,7 +26,9 @@
             #{taskType},
             #{taskSubject},
             #{taskContent},
-            #{remarks}
+            #{remarks},
+            insert_date,
+            timestamp
         )
     </insert>
 

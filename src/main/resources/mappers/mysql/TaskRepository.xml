@@ -18,7 +18,9 @@
             severity,
             status,
             attached_id,
-            remarks
+            remarks,
+            insert_date,
+            timestamp
         )values (
             #{taskNo},
             #{taskType},
@@ -32,7 +34,9 @@
             #{severity},
             #{status},
             #{attachedId},
-            #{remarks}
+            #{remarks},
+            #{insertDate},
+            #{timestamp}
         )
     </insert>
 

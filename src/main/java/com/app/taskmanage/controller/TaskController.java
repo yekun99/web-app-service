@@ -4,10 +4,10 @@ import com.app.taskmanage.service.TaskService;
 import com.core.controller.BaseController;
 import com.core.data.model.DataModel;
 import com.core.exception.ValidationException;
+import com.core.security.SecurityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -81,7 +81,7 @@ public class TaskController extends BaseController {
         DataModel resultModel = new DataModel();
         try {
             DataModel queryModel = this.getInputData(requestMap);
-            queryModel.setFieldValue("assignee", SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+            queryModel.setFieldValue("assignee", SecurityUtils.getCurUsername());
             List<DataModel> userModel = taskService.queryCommTask(queryModel);
             this.handleSuccess(userModel, resultModel);
         } catch (ValidationException ve) {

@@ -7,10 +7,10 @@ import com.app.taskmanage.service.TaskService;
 import com.common.commnumbergenerate.service.CommNumberGenerateService;
 import com.core.data.model.DataModel;
 import com.core.exception.ExceptionHelper;
+import com.core.security.SecurityUtils;
 import com.core.utils.DateUtils;
 import com.core.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -39,7 +39,7 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public void saveCommTask(DataModel saveModel) {
         //设置当前用户
-        saveModel.setFieldValue("createdBy", SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+        saveModel.setFieldValue("createdBy", SecurityUtils.getCurUsername());
         DataModel generateModel = new DataModel();
         generateModel.setFieldValue("numberName", "taskNo");
         //get task_no Serial number
@@ -90,7 +90,7 @@ public class TaskServiceImpl implements TaskService {
     public void updateCommTask(DataModel updateModel) {
         this.validateSaveOrUpdateCommTask(updateModel);
         //设置当前用户名
-        updateModel.setFieldValue("userName", SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+        updateModel.setFieldValue("userName", SecurityUtils.getCurUsername());
         //设置更新时间为系统当前时间
         updateModel.setFieldValue("timestamp", LocalDateTime.now());
         //update comm_task
