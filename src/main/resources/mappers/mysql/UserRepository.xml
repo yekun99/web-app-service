@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.common.usermanage.repository.UserRepository">
+
+    <insert id="saveUser" parameterType="Map">
+        insert into sys_user
+        (
+            user_name,
+            password,
+            id_card,
+            email,
+            phone,
+            address,
+            remarks,
+            insert_date,
+            timestamp
+        )values (
+            #{userName},
+            #{password},
+            #{idCard},
+            #{email},
+            #{phone},
+            #{address},
+            #{remarks},
+            #{insertDate},
+            #{timestamp}
+        )
+    </insert>
+
+    <select id="findUser" parameterType="Map" resultType="DataModel">
+        select * from sys_user where user_name = #{userName}
+    </select>
+
+    <select id="findUserList" parameterType="Map" resultType="DataModel">
+        select * from sys_user where 1=1
+        <if test="userName != null and userName != ''">
+            and user_name = #{userName}
+        </if>
+        <if test="password != null and password != ''">
+            and password = #{password}
+        </if>
+        <if test="idCard != null and idCard != ''">
+            and id_card = #{idCard}
+        </if>
+        <if test="email != null and email != ''">
+            and email = #{email}
+        </if>
+        <if test="phone != null and phone != ''">
+            and phone = #{phone}
+        </if>
+        <if test="address != null and address != ''">
+            and address = #{address}
+        </if>
+        <if test="remarks != null and remarks != ''">
+            and remarks = #{remarks}
+        </if>
+    </select>
+
+    <update id="updateUser" parameterType="Map">
+        update sys_user
+        set timestamp = #{timestamp}
+        <if test="userName != null and userName != ''">
+            , user_name = #{userName}
+        </if>
+        <if test="password != null and password != ''">
+            , password = #{password}
+        </if>
+        <if test="idType != null and idType != ''">
+            , id_type = #{idType}
+        </if>
+        <if test="idCard != null and idCard != ''">
+            , id_card = #{idCard}
+        </if>
+        <if test="gender != null and gender != ''">
+            , gender = #{gender}
+        </if>
+        <if test="email != null and email != ''">
+            , email = #{email}
+        </if>
+        <if test="phone != null and phone != ''">
+            , phone = #{phone}
+        </if>
+        <if test="address != null and address != ''">
+            , address = #{address}
+        </if>
+        <if test="remarks != null and remarks != ''">
+            , remarks = #{remarks}
+        </if>
+        <if test="lockInd != null and lockInd != ''">
+            , lock_ind = #{lockInd}
+        </if>
+        <!--<if test="lockDate != null">-->
+        <!--, lock_date = #{lockDate}-->
+        <!--</if>-->
+        , lock_date = #{lockDate}
+        where user_name = #{userName}
+    </update>
+
+    <delete id="deleteUser" parameterType="Map">
+        delete from sys_user where user_name = #{userName}
+    </delete>
+</mapper>

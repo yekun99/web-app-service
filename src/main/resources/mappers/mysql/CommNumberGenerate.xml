@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.common.commnumbergenerate.repository.CommNumberGenerateRepository">
+
+    <insert id="saveCommNumberGenerate" parameterType="Map">
+        insert into comm_number_generate(
+            number_name,
+            current_value,
+            span,
+            number_desc,
+            insert_date,
+            timestamp
+        )
+        values (
+            #{numberName},
+            #{currentValue},
+            #{span},
+            #{numberDesc},
+            #{insertDate},
+            #{timestamp}
+        )
+    </insert>
+
+    <select id="queryCommNumberGenerate" parameterType="Map" resultType="DataModel">
+        select * from comm_number_generate where number_name = #{numberName}
+    </select>
+
+    <update id="updateCommNumberGenerate" parameterType="Map">
+        update comm_number_generate
+        set timestamp = #{timestamp}
+        <if test="currentValue != null and currentValue != ''">
+            , current_value = current_value +span
+        </if>
+        where id = #{id}
+    </update>
+</mapper>
