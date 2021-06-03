@@ -49,7 +49,7 @@ public class TaskServiceImpl implements TaskService {
         //validate model
         this.validateSaveOrUpdateCommTask(saveModel);
         //set timestamp
-        saveModel.setFieldValue("insertDate", LocalDateTime.now());
+        saveModel.setFieldValue("insertTime", LocalDateTime.now());
         saveModel.setFieldValue("timestamp", LocalDateTime.now());
         //save pms_task
         commTaskRepository.saveCommTask(saveModel);
@@ -66,7 +66,7 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public List<DataModel> queryCommTask(DataModel queryModel) {
         List<DataModel> result = commTaskRepository.queryCommTask(queryModel);
-        result.stream().forEach(task -> task.setFieldValue("insertDate", DateUtils.dateFormat((Date) task.getFieldValue("insertDate"), "yyyy-MM-dd")));
+        result.stream().forEach(task -> task.setFieldValue("insertTime", DateUtils.dateFormat((Date) task.getFieldValue("insertTime"), "yyyy-MM-dd")));
         return result;
     }
 

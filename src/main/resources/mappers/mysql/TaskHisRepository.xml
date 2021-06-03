@@ -19,7 +19,7 @@
             status,
             attached_id,
             remarks,
-            insert_date,
+            insert_time,
             timestamp
         )values (
             #{taskNo},
@@ -35,7 +35,7 @@
             #{status},
             #{attachedId},
             #{remarks},
-            #{insertDate},
+            #{insertTime},
             #{timestamp}
         )
     </insert>
@@ -81,8 +81,8 @@
         <if test="remarks != null and remarks != ''">
             and remarks = #{remarks}
         </if>
-        <if test="insertDate != null">
-            and insert_date = #{insertDate}
+        <if test="insertTime != null">
+            and insert_time = #{insertTime}
         </if>
     </select>
 </mapper>

@@ -13,7 +13,7 @@
             phone,
             address,
             remarks,
-            insert_date,
+            insert_time,
             timestamp
         )values (
             #{userName},
@@ -23,7 +23,7 @@
             #{phone},
             #{address},
             #{remarks},
-            #{insertDate},
+            #{insertTime},
             #{timestamp}
         )
     </insert>

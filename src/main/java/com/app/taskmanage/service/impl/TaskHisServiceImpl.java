@@ -29,7 +29,7 @@ public class TaskHisServiceImpl implements TaskHisService {
     @Override
     public void saveCommTaskHis(DataModel saveModel) {
         //set timestamp
-        saveModel.setFieldValue("insertDate", LocalDateTime.now());
+        saveModel.setFieldValue("insertTime", LocalDateTime.now());
         saveModel.setFieldValue("timestamp", LocalDateTime.now());
         taskHisRepository.saveCommTaskHis(saveModel);
     }
@@ -44,7 +44,7 @@ public class TaskHisServiceImpl implements TaskHisService {
     public List<DataModel> queryCommTaskHis(DataModel queryModel) {
         List<DataModel> result = taskHisRepository.queryCommTaskHis(queryModel);
         result.stream().forEach(taskHis -> {
-            taskHis.setFieldValue("insertDate", DateUtils.dateFormat((Date) taskHis.getFieldValue("insertDate"), "yyyy-MM-dd"));
+            taskHis.setFieldValue("insertTime", DateUtils.dateFormat((Date) taskHis.getFieldValue("insertTime"), "yyyy-MM-dd"));
             taskHis.setFieldValue("timestamp", DateUtils.dateFormat((Date) taskHis.getFieldValue("timestamp"), "yyyy-MM-dd HH:mm:ss"));
         });
         return result;

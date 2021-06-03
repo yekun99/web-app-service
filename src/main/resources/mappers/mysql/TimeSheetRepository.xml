@@ -15,7 +15,7 @@
             task_subject,
             task_content,
             remarks,
-            insert_date,
+            insert_time,
             timestamp
         )values (
             #{userName},
@@ -27,7 +27,7 @@
             #{taskSubject},
             #{taskContent},
             #{remarks},
-            insert_date,
+            #{insertTime},
             timestamp
         )
     </insert>
@@ -58,8 +58,8 @@
         <if test="taskContent != null and taskContent != ''">
             and task_content = #{taskContent}
         </if>
-        <if test="insertDate != null">
-            and insert_date = #{insertDate}
+        <if test="insertTime != null">
+            and insert_time = #{insertTime}
         </if>
         order by work_day desc
     </select>
