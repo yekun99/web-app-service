@@ -5,7 +5,7 @@ import com.common.usermanage.service.UserService;
 import com.core.data.model.DataModel;
 import com.core.exception.ExceptionHelper;
 import com.core.message.service.MessageManager;
-import com.core.utils.JWTTokenUtils;
+import com.core.security.JwtTokenUtils;
 import com.core.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -21,6 +21,8 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private JwtTokenUtils jwtTokenUtils;
 
 
     /***
@@ -52,7 +54,7 @@ public class UserServiceImpl implements UserService {
         if (userModel != null && bCryptPasswordEncoder.matches(queryModel.getStringValue("password"), userModel.getStringValue("password"))) {
             Map<String, Object> claims = new HashMap<>();
             claims.put("userName", userModel.getStringValue("userName"));
-            String token = JWTTokenUtils.sign(null, claims, 0);
+            String token = jwtTokenUtils.sign(null, claims, 0);
             userModel.setFieldValue("token", token);
             MessageManager.getInstance().addSuccessMessage("sys.user.query.success");
         } else {
