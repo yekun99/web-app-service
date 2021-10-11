@@ -37,9 +37,9 @@
         <dependency>
             <groupId>com</groupId>
             <artifactId>app-core</artifactId>
-            <version>21.09.21</version>
+            <version>21.10.11</version>
             <scope>system</scope>
-            <systemPath>${basedir}/src/lib/app-core-21.09.21.jar</systemPath>
+            <systemPath>${basedir}/src/lib/app-core-21.10.11.jar</systemPath>
         </dependency>
 
         <!-- spring boot configuration -->
